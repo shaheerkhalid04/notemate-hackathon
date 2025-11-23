@@ -1,4 +1,5 @@
 streamlit
+blinker
 groq
 faiss-cpu
 sentence-transformers
