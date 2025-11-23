@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  notemate:
+    build: .
+    container_name: notemate-app
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    volumes:
+      - ./uploads:/app/uploads
+      - ./vector_db:/app/vector_db
+    restart: unless-stopped
