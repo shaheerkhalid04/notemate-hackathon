@@ -1,5 +1,7 @@
 streamlit
 blinker
+protobuf
+
 groq
 faiss-cpu
 sentence-transformers
