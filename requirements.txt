@@ -1,11 +1,12 @@
 streamlit
 blinker
 protobuf
+typing_extensions
 
 groq
 faiss-cpu
 sentence-transformers
-PyPDF2
+pypdf2
 python-docx
 python-dotenv
 python-multipart
