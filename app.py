@@ -18,15 +18,24 @@ st.set_page_config(
 if 'rag_engine' not in st.session_state:
     st.session_state.rag_engine = RAGEngine()
 if 'generator' not in st.session_state:
-    api_key = os.getenv('GROQ_API_KEY')
+    # First try to read from Streamlit Secrets (for cloud deployment)
+    api_key = None
+    try:
+        api_key = st.secrets["GROQ_API_KEY"]
+    except Exception:
+        # Fallback to environment variable (for local development)
+        api_key = os.getenv("GROQ_API_KEY")
+
     if api_key:
         st.session_state.generator = ContentGenerator(api_key)
     else:
-        st.error("⚠️ Please add your GROQ_API_KEY to .env file")
-        st.info("Get your free API key from https://console.groq.com/keys")
+        st.error("⚠️ GROQ_API_KEY not found.")
+        st.info(
+            'In Streamlit Cloud, set it under "Settings → Secrets" as:\n'
+            'GROQ_API_KEY = "your_key_here"'
+        )
         st.stop()
-if 'collection_name' not in st.session_state:
-    st.session_state.collection_name = None
+
 
 # Header
 st.title("🚀 NOTEMATE - GenAI Study Pack Generator")
