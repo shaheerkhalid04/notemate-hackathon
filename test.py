@@ -7,7 +7,7 @@ load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 resp = client.chat.completions.create(
-    model="groq",
+    model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
     messages=[{"role": "user", "content": "Hello from NoteMate!"}]
 )
 
