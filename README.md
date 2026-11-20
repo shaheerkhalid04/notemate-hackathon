@@ -4,7 +4,7 @@ Transform your notes into AI-powered learning materials using RAG + GenAI.
 
 🚀 Overview
 
-NOTEMATE is an AI-powered study assistant built with Streamlit, FAISS, Sentence Transformers, and Groq LLaMA 3.3 70B.
+NOTEMATE is an AI-powered study assistant built with Streamlit, FAISS, Sentence Transformers, and Groq gpt-oss-120b.
 It allows users to upload notes (PDF, DOCX, TXT) and instantly generate:
 
 Quizzes (MCQ / Scenario / Short)
@@ -126,6 +126,7 @@ Host your app publicly
 🔑 Environment Variables
 Variable	Description
 GROQ_API_KEY	Required to access Groq LLM API
+GROQ_MODEL	Optional. Defaults to openai/gpt-oss-120b (Groq retired llama-3.3-70b-versatile on 16 Aug 2026)
 🛠️ Technologies Used
 
 Streamlit – UI
@@ -134,7 +135,7 @@ FAISS CPU – vector database
 
 Sentence Transformers – MiniLM embeddings
 
-Groq LLaMA 3.3-70B – LLM inference
+Groq gpt-oss-120b, LLM inference
 
 PyPDF2 / python-docx – document parsing
 

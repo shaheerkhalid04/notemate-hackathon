@@ -5,7 +5,11 @@ import os
 class ContentGenerator:
     def __init__(self, api_key: str):
         self.client = Groq(api_key=api_key)
-        self.model = "llama-3.3-70b-versatile"   # fast + free + powerful
+        # Groq retired llama-3.3-70b-versatile on 16 Aug 2026. GROQ_MODEL overrides this.
+        self.model = os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b")
+        # gpt-oss reasons before answering, and the reasoning counts against max_tokens,
+        # so ask for low effort and leave room for it on top of the answer.
+        self.reasoning = self.model.startswith("openai/gpt-oss")
 
     def generate_with_context(self, prompt: str, context: List[str]) -> str:
         context_text = "\n\n".join(context)
@@ -27,9 +31,10 @@ Your answer must stay grounded in the context.
                 model=self.model,
                 messages=[{"role": "user", "content": full_prompt}],
                 temperature=0.7,
-                max_tokens=2000
+                max_tokens=2600 if self.reasoning else 2000,
+                **({"extra_body": {"reasoning_effort": "low"}} if self.reasoning else {}),
             )
-            return resp.choices[0].message.content
+            return resp.choices[0].message.content or ""
         except Exception as e:
             return f"Error generating content: {e}"
 
